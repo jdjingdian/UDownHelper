@@ -15,6 +15,7 @@ struct ContentView: View {
     @State var videoFormat = ""
     @State var combineUrl = ""
     @State var cOut = ""
+    @State var consoleOutMsg = [contentData]()
     var window = NSScreen.main?.visibleFrame
     var body: some View {
         VStack(alignment: .leading, spacing: 5){
@@ -31,7 +32,7 @@ struct ContentView: View {
             }.frame(width: window!.width/2)
                 .padding(.all,10)
             
-            ContentScrollView(contentHeight: window!.height/3, contentWeight: window!.width/2, contentEntries: $processManager.consoleOutput)
+            ContentScrollView(contentHeight: window!.height/3, contentWeight: window!.width/2, contentEntries: $consoleOutMsg)
             
             HStack(){
                 TextField("视频格式",text: $videoFormat)
@@ -51,6 +52,8 @@ struct ContentView: View {
             }.frame(width: window!.width/2)
                 .padding(.all,20)
             //        }.preferredColorScheme(.light)
+        }.onChange(of: processManager.consoleOutput){ _ in
+            consoleOutMsg.append(contentData(output: processManager.consoleOutput, id: consoleOutMsg.count))
         }
     }
 }

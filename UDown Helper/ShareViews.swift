@@ -10,18 +10,27 @@ import Foundation
 struct ContentScrollView: View {
     let contentHeight:CGFloat
     let contentWeight:CGFloat
-    @Binding var contentEntries:[String]
+    @Binding var contentEntries:[contentData]
     var body: some View {
-        ScrollView(){
-            ScrollViewReader { scrollView in
+        ScrollViewReader { proxy in
+            ScrollView(.vertical){
                 VStack(alignment:.leading,spacing:0){
                     ForEach(self.contentEntries,id:\.self){ line in
-                        ContentSubview(scrollView: scrollView, entry: line)
+                        ContentSubview(scrollView: proxy, entry: line, dataCount: contentEntries.count)
+                            .onAppear {
+                                proxy.scrollTo(line.id)
+                            }
+                            
                     }
-                        
+                    
                 }.animation(.easeIn(duration: 0.5))
-                .offset(y:5)
-                .frame(maxWidth:.infinity,alignment: .leading)
+                    .offset(y:5)
+                    .frame(maxWidth:.infinity,alignment: .leading)
+//                    .onChange(of: contentEntries.) { _ in
+//                        withAnimation {
+//                            proxy.scrollTo(self.contentEntries.last)
+//                        }
+//                    }
             }
         }
         .clipped()
@@ -34,25 +43,19 @@ struct ContentScrollView: View {
 
 struct ContentSubview: View {
     let scrollView:ScrollViewProxy
-    let entry:String
+    let entry:contentData
+    let dataCount:Int
     var body: some View {
         VStack(alignment: .leading, spacing: 0){
-//            Text("Output:")
-//                .font(.system(size: 10))
-//                .foregroundColor(.gray)
-//                .fontWeight(.ultraLight)
-            
-            Text(entry)
+            Text(entry.output)
                 .font(.system(size: 14))
                 .fontWeight(.light)
                 .foregroundColor(Color("textColor"))
-                
-            
-            
         }.frame(alignment:.leading)
             .offset(x:10)
-            .onAppear(){
-                scrollView.scrollTo(entry)
-            }
+            .id(entry.id)
+//            .onAppear(){
+//                scrollView.scrollTo(entry)
+//            }
     }
 }

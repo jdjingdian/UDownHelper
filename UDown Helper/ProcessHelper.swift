@@ -11,7 +11,7 @@ import Combine
 
 class ProcessHelper: ObservableObject{
     let globalQueue = DispatchQueue.global()
-    @Published var consoleOutput:[String] = [""]
+    @Published var consoleOutput = ""
     func runProcess(dlExcPath:String,dlPath:String,dlArgs:[String]){
         globalQueue.async {
             let task = Process()
@@ -47,7 +47,8 @@ class ProcessHelper: ObservableObject{
                     print("pipe:\(pipe)")
                     let line = String(data: pipe.availableData,encoding: .utf8)
                     DispatchQueue.main.async {
-                        self.consoleOutput.append(line ?? "nil output")
+//                        self.consoleOutput.append(line ?? "nil output")
+                        self.consoleOutput = line ?? "nil output"
                     }
                     
                 }
