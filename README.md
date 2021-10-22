@@ -83,8 +83,19 @@
       task.waitUntilExit()//←没有写这个就不会实时显示
    ```
    个人理解，如果没有使用`waitUntilExit()`,运行的脚本就会直接进入后台，从而`readabilityHandler`无法读取到脚本的控制台输出。
+   
 4. ##### 关闭App Sandbox
 
    关闭App Sandbox后的应用无法提交到App Store，但这问题不大，本身就只是小工具，如果不关闭沙盒的话，我的程序就没办法直接读取电脑中的内容，也就没办法控制youtube-dl程序进行下载了，所以，要在Entitlement文件中将该选项设置为关。
 
    ![WX20211022-195522@2x.png](https://i.loli.net/2021/10/22/movBkhwQNiSjb8O.png)
+
+5. ##### 文件路径使用相对路径
+
+   起初我的文件URL写成`URL(fileURLWithPath:~/Downloads)`时，程序会崩溃，但如果我指定绝对路径的话，就不方便程序的传播，经过修改，可以使用相对路径，如下
+
+   ``` swift
+   URL(fileURLWithPath: (NSString(string:"~/Downloads").expandingTildeInPath))
+   ```
+
+   

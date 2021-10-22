@@ -11,7 +11,7 @@ import Combine
 
 class ProcessHelper: ObservableObject{
     let globalQueue = DispatchQueue.global()
-    @Published var consoleOutput = ""
+    @Published var consoleOutput:[String] = [""]
     func runProcess(dlExcPath:String,dlPath:String,dlArgs:[String]){
         globalQueue.async {
             let task = Process()
@@ -26,7 +26,7 @@ class ProcessHelper: ObservableObject{
             let outHandle = pipe.fileHandleForReading
             
             //this one helps set the directory the executable operates from
-            task.currentDirectoryURL = URL(fileURLWithPath: "/Users/magicdian/Downloads")
+            task.currentDirectoryURL = URL(fileURLWithPath: (NSString(string:"~/Downloads").expandingTildeInPath))
             
             //all the arguments to the executable
             task.arguments = dlArgs
@@ -45,8 +45,10 @@ class ProcessHelper: ObservableObject{
             DispatchQueue.main.async {
                 outHandle.readabilityHandler = { pipe in
                     print("pipe:\(pipe)")
-                    var line = String.init(data: pipe.availableData,encoding: .utf8)
-                    print("line:\(line)")
+                    let line = String(data: pipe.availableData,encoding: .utf8)
+                    DispatchQueue.main.async {
+                        self.consoleOutput.append(line ?? "nil output")
+                    }
                     
                 }
             }
@@ -57,17 +59,6 @@ class ProcessHelper: ObservableObject{
                 print("运行错误")
             }
             task.waitUntilExit()//关闭这个之后无法接受到实时信息
-            let data = pipe.fileHandleForReading.readDataToEndOfFile()
-            let dataString = String (data: data, encoding: String.Encoding.utf8)
-            
-            DispatchQueue.main.async {
-                self.consoleOutput = dataString!
-            }
-            
         }
-        
-        
-        print("execution complete...")
     }
-    
 }

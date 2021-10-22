@@ -10,13 +10,16 @@ import Foundation
 struct ContentScrollView: View {
     let contentHeight:CGFloat
     let contentWeight:CGFloat
-    @Binding var contentEntries:String
+    @Binding var contentEntries:[String]
     var body: some View {
         ScrollView(){
             ScrollViewReader { scrollView in
-                VStack(alignment:.leading,spacing:5){
-                        ContentSubview(scrollView: scrollView, entry: contentEntries)
-                }.animation(.linear(duration: 0.7))
+                VStack(alignment:.leading,spacing:0){
+                    ForEach(self.contentEntries,id:\.self){ line in
+                        ContentSubview(scrollView: scrollView, entry: line)
+                    }
+                        
+                }.animation(.easeIn(duration: 0.5))
                 .offset(y:5)
                 .frame(maxWidth:.infinity,alignment: .leading)
             }
@@ -33,10 +36,12 @@ struct ContentSubview: View {
     let scrollView:ScrollViewProxy
     let entry:String
     var body: some View {
-        VStack(alignment: .leading, spacing: 1){
+        VStack(alignment: .leading, spacing: 0){
+//            Text("Output:")
+//                .font(.system(size: 10))
+//                .foregroundColor(.gray)
+//                .fontWeight(.ultraLight)
             
-            Text("Output:")
-                .font(.system(size: 15))
             Text(entry)
                 .font(.system(size: 14))
                 .fontWeight(.light)
@@ -44,7 +49,7 @@ struct ContentSubview: View {
             
             
         }.frame(alignment:.leading)
-            .offset(x:5)
+            .offset(x:10)
             .onAppear(){
                 scrollView.scrollTo(entry)
             }
