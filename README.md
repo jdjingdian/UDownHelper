@@ -98,4 +98,12 @@
    URL(fileURLWithPath: (NSString(string:"~/Downloads").expandingTildeInPath))
    ```
 
-   
+6. ##### 适配深色模式
+
+   最初我习惯用`.preferredColorScheme(.light)`来强制应用使用浅色模式，这种方式在iOS上蛮好用的，因为iOS应用都是全屏运行的，并不会有什么违和感，但是在mac上运行时，系统切换到了深色模式，应用还保留在浅色模式，会非常突兀，解决的方法也很简单，在Assets里添加ColorSet即可，可以为深色模式手动设定颜色，使用的时候使用以下样例即可
+
+   ``` swift
+   .foregroundColor(Color("textColor"))//textColor是我给ColorSet起得名字
+   ```
+
+   ![WX20211022-224119@2x.png](https://i.loli.net/2021/10/22/hD2YtcAXaRP9J4f.png)
