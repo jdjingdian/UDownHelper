@@ -45,7 +45,7 @@ struct ContentSubview: View {
             Text(entry)
                 .font(.system(size: 14))
                 .fontWeight(.light)
-                .foregroundColor(.black)
+                .foregroundColor(Color("textColor"))
             
             
         }.frame(alignment:.leading)
