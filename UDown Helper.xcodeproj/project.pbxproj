@@ -7,19 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		39093FA127229C2C004E62F7 /* ShareViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39093FA027229C2C004E62F7 /* ShareViews.swift */; };
 		39994D99272255BC00593E5F /* UDown_HelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39994D98272255BC00593E5F /* UDown_HelperApp.swift */; };
 		39994D9B272255BC00593E5F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39994D9A272255BC00593E5F /* ContentView.swift */; };
 		39994D9D272255BF00593E5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39994D9C272255BF00593E5F /* Assets.xcassets */; };
 		39994DA0272255BF00593E5F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39994D9F272255BF00593E5F /* Preview Assets.xcassets */; };
+		39994DA82722852000593E5F /* ProcessHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39994DA72722852000593E5F /* ProcessHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		39093FA027229C2C004E62F7 /* ShareViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViews.swift; sourceTree = "<group>"; };
 		39994D95272255BC00593E5F /* UDown Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UDown Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		39994D98272255BC00593E5F /* UDown_HelperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDown_HelperApp.swift; sourceTree = "<group>"; };
 		39994D9A272255BC00593E5F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		39994D9C272255BF00593E5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		39994D9F272255BF00593E5F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		39994DA1272255BF00593E5F /* UDown_Helper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UDown_Helper.entitlements; sourceTree = "<group>"; };
+		39994DA72722852000593E5F /* ProcessHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 			children = (
 				39994D98272255BC00593E5F /* UDown_HelperApp.swift */,
 				39994D9A272255BC00593E5F /* ContentView.swift */,
+				39093FA027229C2C004E62F7 /* ShareViews.swift */,
+				39994DA72722852000593E5F /* ProcessHelper.swift */,
 				39994D9C272255BF00593E5F /* Assets.xcassets */,
 				39994DA1272255BF00593E5F /* UDown_Helper.entitlements */,
 				39994D9E272255BF00593E5F /* Preview Content */,
@@ -139,7 +145,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39093FA127229C2C004E62F7 /* ShareViews.swift in Sources */,
 				39994D9B272255BC00593E5F /* ContentView.swift in Sources */,
+				39994DA82722852000593E5F /* ProcessHelper.swift in Sources */,
 				39994D99272255BC00593E5F /* UDown_HelperApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
