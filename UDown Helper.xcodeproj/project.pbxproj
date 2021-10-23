@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		39093FA127229C2C004E62F7 /* ShareViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39093FA027229C2C004E62F7 /* ShareViews.swift */; };
+		39093FA127229C2C004E62F7 /* ContentScrollViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39093FA027229C2C004E62F7 /* ContentScrollViews.swift */; };
 		3956949E272305D0009EF6F2 /* ModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3956949D272305D0009EF6F2 /* ModelContainer.swift */; };
+		395694A02723BD15009EF6F2 /* A2SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3956949F2723BD15009EF6F2 /* A2SettingView.swift */; };
+		395694A32723BFBC009EF6F2 /* FolderSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395694A22723BFBC009EF6F2 /* FolderSelectorView.swift */; };
 		39994D99272255BC00593E5F /* UDown_HelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39994D98272255BC00593E5F /* UDown_HelperApp.swift */; };
 		39994D9B272255BC00593E5F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39994D9A272255BC00593E5F /* ContentView.swift */; };
 		39994D9D272255BF00593E5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39994D9C272255BF00593E5F /* Assets.xcassets */; };
@@ -17,8 +19,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		39093FA027229C2C004E62F7 /* ShareViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViews.swift; sourceTree = "<group>"; };
+		39093FA027229C2C004E62F7 /* ContentScrollViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentScrollViews.swift; sourceTree = "<group>"; };
 		3956949D272305D0009EF6F2 /* ModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelContainer.swift; sourceTree = "<group>"; };
+		3956949F2723BD15009EF6F2 /* A2SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = A2SettingView.swift; sourceTree = "<group>"; };
+		395694A22723BFBC009EF6F2 /* FolderSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelectorView.swift; sourceTree = "<group>"; };
 		39994D95272255BC00593E5F /* UDown Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UDown Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		39994D98272255BC00593E5F /* UDown_HelperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDown_HelperApp.swift; sourceTree = "<group>"; };
 		39994D9A272255BC00593E5F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -39,6 +43,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		395694A12723BF85009EF6F2 /* ChildViews */ = {
+			isa = PBXGroup;
+			children = (
+				395694A22723BFBC009EF6F2 /* FolderSelectorView.swift */,
+				39093FA027229C2C004E62F7 /* ContentScrollViews.swift */,
+				3956949F2723BD15009EF6F2 /* A2SettingView.swift */,
+			);
+			path = ChildViews;
+			sourceTree = "<group>";
+		};
 		39994D8C272255BC00593E5F = {
 			isa = PBXGroup;
 			children = (
@@ -61,7 +75,7 @@
 				39994D98272255BC00593E5F /* UDown_HelperApp.swift */,
 				3956949D272305D0009EF6F2 /* ModelContainer.swift */,
 				39994D9A272255BC00593E5F /* ContentView.swift */,
-				39093FA027229C2C004E62F7 /* ShareViews.swift */,
+				395694A12723BF85009EF6F2 /* ChildViews */,
 				39994DA72722852000593E5F /* ProcessHelper.swift */,
 				39994D9C272255BF00593E5F /* Assets.xcassets */,
 				39994DA1272255BF00593E5F /* UDown_Helper.entitlements */,
@@ -148,10 +162,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39093FA127229C2C004E62F7 /* ShareViews.swift in Sources */,
+				395694A32723BFBC009EF6F2 /* FolderSelectorView.swift in Sources */,
+				39093FA127229C2C004E62F7 /* ContentScrollViews.swift in Sources */,
 				3956949E272305D0009EF6F2 /* ModelContainer.swift in Sources */,
 				39994D9B272255BC00593E5F /* ContentView.swift in Sources */,
 				39994DA82722852000593E5F /* ProcessHelper.swift in Sources */,
+				395694A02723BD15009EF6F2 /* A2SettingView.swift in Sources */,
 				39994D99272255BC00593E5F /* UDown_HelperApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,6 +304,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -316,6 +333,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

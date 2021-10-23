@@ -1,4 +1,4 @@
-### 使用第三方框架：nil
+### 使用第三方框架：youtube-dl, aria2
 
 
 
@@ -107,3 +107,15 @@
    ```
 
    ![WX20211022-224119@2x.png](https://i.loli.net/2021/10/22/hD2YtcAXaRP9J4f.png)
+
+7. ##### 莫名其妙的环境变量引起的问题
+
+   这个应用的基础功能是调用`youtube-dl`来下载视频，但关键核心其实是`aria2`外挂下载器来加速，但起初按照正确的命令配置后，下载的时候始终无法调用到aria2下载器加速，仍然是使用youtube-dl本身的下载功能，在琢磨了一整天仍然不知道为什么后，我尝试在代码中加入环境变量，没想到意外地解决了这个问题
+
+   ``` swift
+   var environment =  ProcessInfo.processInfo.environment
+   environment["PATH"] = "/usr/local/bin" //← youtube-dl和aria2c可执行程序所在的目录
+   task.environment = environment
+   ```
+
+   ![561a803262669f1069cce8cf76766b49.jpg](https://i.loli.net/2021/10/23/ljT5zNK6bHpiu3G.jpg)
