@@ -27,6 +27,7 @@ struct ContentView: View {
     @AppStorage("split") var split = "16"
     @AppStorage("maxConnection") var maxConcurrentDown = "8"
     @AppStorage("minBlockSize") var minBlockSize = "1"
+    @AppStorage("runCount") var runCount:Int = 0
     var window = NSScreen.main?.visibleFrame
     var body: some View {
         VStack(alignment: .leading, spacing: 5){
@@ -36,6 +37,27 @@ struct ContentView: View {
                 FolderSelector(fnName: "选择aria2路径", filePath: $ariaExcUrl, fileExist: $ariaExist, isDir: false)
                 Text("当前下载目录：\(dirUrl)")
                     .fontWeight(.bold)
+                HelpView()
+                
+                Button("停止"){
+                    if !processManager.taskStack.isEmpty {
+                        print("准备停止")
+                        
+                        for n in 0..<processManager.taskStack.count {
+                            DispatchQueue.main.async {
+                                processManager.taskStack[n].process.terminate()
+                                
+                                processManager.taskStack[n].runningType = RunningType.acciStop
+                            }
+                            
+                            
+                            
+                        }
+                    }else{
+                        print("没有进程运行")
+                    }
+                }
+                
                 
             }
             .padding([.top, .leading], 10.0)
@@ -65,7 +87,8 @@ struct ContentView: View {
                     }
                 Button {
                     let arg = ["-F",videoUrl]
-                    processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg)
+                    processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg,opMode: .inquire,runMode: .running)
+                    runCount += 1
                 } label: {
                     Image(systemName: "magnifyingglass.circle")
                 }.foregroundColor(videoUrl == "" ? Color(.gray):Color("textColor"))
@@ -75,7 +98,13 @@ struct ContentView: View {
             }.frame(width: window!.width/2)
                 .padding(.all,10)
             
-            ContentScrollView(contentHeight: window!.height/3, contentWeight: window!.width/2, contentEntries: $consoleOutMsg)
+            HStack(){
+                ContentScrollView(contentHeight: window!.height/3, contentWeight: window!.width/2, contentEntries: $consoleOutMsg, processManager: processManager)
+                
+
+                
+            }
+            
             
             HStack(){
                 TextField("留空使用默认格式",text: $videoFormat)
@@ -93,20 +122,21 @@ struct ContentView: View {
                     if useAria{
                         if videoFormat == ""{
                             let arg = ["--external-downloader",ariaExcUrl,"--external-downloader-args","-x \(maxConnection) -s \(split) -j \(maxConcurrentDown) -k \(minBlockSize)M",videoUrl]
-                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg)
+                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg,opMode: .download,runMode: .running)
                         }else{
                             let arg = ["--external-downloader",ariaExcUrl,"--external-downloader-args","-x \(maxConnection) -s \(split) -j \(maxConcurrentDown) -k \(minBlockSize)M","-f",videoFormat,videoUrl]
-                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg)
+                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg,opMode: .download,runMode: .running)
                         }
                     }else{
                         if videoFormat == ""{
                             let arg = [videoUrl]
-                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg)
+                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg,opMode: .download,runMode: .running)
                         }else{
                             let arg = ["-f",videoFormat,videoUrl]
-                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg)
+                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg,opMode: .download,runMode: .running)
                         }
                     }
+                    runCount += 1
                     
                 } label: {
                     Image(systemName: "icloud.and.arrow.down")
@@ -126,6 +156,8 @@ struct ContentView: View {
                         Text("Aria2下载器设置")
                     }
                 }
+                
+                BuyCoffeeView(runCount: $runCount)
 
 
                 
@@ -144,3 +176,27 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+struct HelpView: View{
+    var body:some View {
+        Button {
+            
+        } label: {
+            Image(systemName: "questionmark.circle.fill")
+                .foregroundColor(.yellow)
+        }
+
+    }
+}
+
+
+struct BuyCoffeeView: View {
+    @Binding var runCount: Int
+    var body: some View {
+        Button {
+            print(runCount)
+        } label: {
+            Image(systemName: "gift.fill")
+                .foregroundColor(.orange)
+        }
+    }
+}

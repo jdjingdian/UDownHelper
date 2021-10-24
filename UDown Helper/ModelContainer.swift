@@ -22,3 +22,20 @@ class DetailWC<RootView : View>: NSWindowController {
         self.init(window: window)
     }
 }
+
+enum TaskType:String {
+    case inquire = "查询"
+    case download = "下载"
+}
+
+enum RunningType {
+    case running
+    case complete
+    case acciStop
+}
+
+struct taskTrack:Hashable{
+    var process:Process
+    var taskType:TaskType
+    var runningType:RunningType
+}

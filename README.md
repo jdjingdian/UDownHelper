@@ -10,7 +10,11 @@
 4. 确保youtube-dl和aria2是安装在`/usr/local/bin`目录下，目前是写死的
 5. 快乐下载
 
+---
 
+#### 已知问题
+
+- ~~成下载后CPU占用会飙升，正在排查~~ [**解决方法**](# 进程结束task的输出没有停止导致CPU占用过高)
 
 ---
 
@@ -171,7 +175,45 @@
 
    `@AppStorage`的行为与`@State`相似，当数据发生变化的时候，也会驱动UI界面重新绘制。默认情况下，`@AppStorage`会使用`UserDefaults.standard`来存储数据，但是你也可以自定义使用你自己的`UserDefault`存储。
 
-   
+9. ##### 进程结束task的输出没有停止导致CPU占用过高
+
+经过很多次测试，最终猜测占用过高的原因可能跟控制台输出有关，注释掉输出部分的代码后，程序运行后不会再出现CPU占用过高的情况。控制台输出原本的代码如下：
+
+``` swift
+task.standardOutput = pipe
+let outHandle = pipe.fileHandleForReading
+DispatchQueue.main.async {
+    outHandle.readabilityHandler = { pipe in
+        let line = String(data: pipe.availableData,encoding: .utf8)
+            DispatchQueue.main.async {
+                self.consoleOutput = line ?? "nil output"
+            }
+    }
+    self.taskStack.append(taskTrack(process: task, taskType: opMode, runningType: runMode))
+}
+```
+
+再次测试，发现当程序结束之后，管道的`readabilityHandler`仍然在不断地读取内容，导致CPU占用过高，所以应该要在程序停止后释放。
+
+最终改成如下：
+
+``` swift
+DispatchQueue.main.async {
+    outHandle.readabilityHandler = { pipe in
+        let line = String(data: pipe.availableData,encoding: .utf8)
+        if task.isRunning {
+            DispatchQueue.main.async {
+                self.consoleOutput = line ?? "nil output"
+            }
+        }else{
+            outHandle.readabilityHandler = nil //释放
+        }
+    }
+    self.taskStack.append(taskTrack(process: task, taskType: opMode, runningType: runMode))
+}
+```
+
+
 
 ----
 

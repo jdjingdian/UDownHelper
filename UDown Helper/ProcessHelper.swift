@@ -12,7 +12,8 @@ import Combine
 class ProcessHelper: ObservableObject{
     let globalQueue = DispatchQueue.global() //设置后台并行队列
     @Published var consoleOutput = ""
-    func runProcess(dlExcPath:String,dlPath:String,dlArgs:[String]){
+    @Published var taskStack:[taskTrack] = []
+    func runProcess(dlExcPath:String,dlPath:String,dlArgs:[String],opMode:TaskType,runMode:RunningType){
         globalQueue.async {
             let task = Process()
             
@@ -49,12 +50,17 @@ class ProcessHelper: ObservableObject{
             DispatchQueue.main.async {
                 outHandle.readabilityHandler = { pipe in
                     let line = String(data: pipe.availableData,encoding: .utf8)
-                    DispatchQueue.main.async {
-//                        self.consoleOutput.append(line ?? "nil output")
-                        self.consoleOutput = line ?? "nil output"
+                    if task.isRunning {
+                        DispatchQueue.main.async {
+                            self.consoleOutput = line ?? "nil output"
+                        }
+                    }else{
+                        outHandle.readabilityHandler = nil
                     }
                     
+                    
                 }
+                self.taskStack.append(taskTrack(process: task, taskType: opMode, runningType: runMode))
             }
             
             do{
