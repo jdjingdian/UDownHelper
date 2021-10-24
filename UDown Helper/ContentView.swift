@@ -10,23 +10,23 @@ import Combine
 
 struct ContentView: View {
     @ObservedObject var processManager = ProcessHelper()
-    @State var dirUrl = NSString(string:"~/Downloads").expandingTildeInPath
-    @State var ydlExcUrl = "/usr/local/bin/youtube-dl"
-    @State var ariaExcUrl = "/usr/local/bin/aria2c"
+    @AppStorage("dirUrl") var dirUrl:String = NSString(string:"~/Downloads").expandingTildeInPath
+    @AppStorage("ydlExcUrl") var ydlExcUrl:String = "/usr/local/bin/youtube-dl"
+    @AppStorage("ariaExcUrl") var ariaExcUrl:String = "/usr/local/bin/aria2c"
     @State var videoUrl = ""
     @State var videoFormat = ""
     @State var combineUrl = ""
     @State var cOut = ""
     @State var consoleOutMsg = [contentData]()
     @State var sourceLogo = Image(systemName: "play.tv.fill")
-    @State var dirExist = true
-    @State var dlExist = true
-    @State var ariaExist = true
-    @State var useAria = false
-    @State var maxConnection = "16"
-    @State var split = "16"
-    @State var maxConcurrentDown = "8"
-    @State var minBlockSize = "1"
+    @State var dirExist = false
+    @State var dlExist = false
+    @State var ariaExist = false
+    @AppStorage("useAria") var useAria = false
+    @AppStorage("maxConnection") var maxConnection = "16"
+    @AppStorage("split") var split = "16"
+    @AppStorage("maxConnection") var maxConcurrentDown = "8"
+    @AppStorage("minBlockSize") var minBlockSize = "1"
     var window = NSScreen.main?.visibleFrame
     var body: some View {
         VStack(alignment: .leading, spacing: 5){
@@ -34,7 +34,8 @@ struct ContentView: View {
                 FolderSelector(fnName: "选择输出文件夹", filePath: $dirUrl, fileExist: $dirExist, isDir: true)
                 FolderSelector(fnName: "选择youtube-dl路径", filePath: $ydlExcUrl,fileExist: $dlExist,isDir: false)
                 FolderSelector(fnName: "选择aria2路径", filePath: $ariaExcUrl, fileExist: $ariaExist, isDir: false)
-                
+                Text("当前下载目录：\(dirUrl)")
+                    .fontWeight(.bold)
                 
             }
             .padding([.top, .leading], 10.0)
@@ -77,7 +78,7 @@ struct ContentView: View {
             ContentScrollView(contentHeight: window!.height/3, contentWeight: window!.width/2, contentEntries: $consoleOutMsg)
             
             HStack(){
-                TextField("视频格式,默认最佳",text: $videoFormat)
+                TextField("留空使用默认格式",text: $videoFormat)
                     .onReceive(Just(videoFormat)) { newValue in //只允许输入数字
                         let filtered = newValue.filter { "0123456789.".contains($0) }
                         if filtered != newValue {
@@ -91,7 +92,7 @@ struct ContentView: View {
                     
                     if useAria{
                         if videoFormat == ""{
-                            let arg = ["--external-downloader",ariaExcUrl,"--external-downloader-args","-x \(maxConnection) -s \(split) -j \(maxConcurrentDown) -k \(minBlockSize)M","-f","bestvideo+bestaudio",videoUrl]
+                            let arg = ["--external-downloader",ariaExcUrl,"--external-downloader-args","-x \(maxConnection) -s \(split) -j \(maxConcurrentDown) -k \(minBlockSize)M",videoUrl]
                             processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg)
                         }else{
                             let arg = ["--external-downloader",ariaExcUrl,"--external-downloader-args","-x \(maxConnection) -s \(split) -j \(maxConcurrentDown) -k \(minBlockSize)M","-f",videoFormat,videoUrl]
@@ -99,7 +100,7 @@ struct ContentView: View {
                         }
                     }else{
                         if videoFormat == ""{
-                            let arg = ["-f","bestvideo+bestaudio",videoUrl]
+                            let arg = [videoUrl]
                             processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg)
                         }else{
                             let arg = ["-f",videoFormat,videoUrl]

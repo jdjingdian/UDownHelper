@@ -22,7 +22,7 @@ struct FolderSelector:View {
                 panel.allowsMultipleSelection = false
                 panel.canChooseDirectories = isDir ? true:false
                 panel.canChooseFiles = isDir ? false:true
-                panel.directoryURL = URL(string: "~/Downloads") //设置默认打开文件路径为用户下载路径
+                panel.directoryURL = URL(string: filePath) //设置默认打开文件路径为用户下载路径
                 if panel.runModal() == .OK {
                     filePath = panel.url?.path ?? "~/Downloads"
                     if fileManager.fileExists(atPath: filePath){

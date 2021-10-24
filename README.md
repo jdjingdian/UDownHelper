@@ -132,6 +132,47 @@
 
    ![561a803262669f1069cce8cf76766b49.jpg](https://i.loli.net/2021/10/23/ljT5zNK6bHpiu3G.jpg)
 
+8. ##### 简单的用户配置存储
+
+   我在程序里设置了默认下载目录为`~/Downloads`，但也许有用户会希望能更改默认存储位置，并希望下次程序启动的时候能记住此前的选择，这样就不用每次都选择目录了。这里选择了一个非常简单的方法，在SwiftUI2.0中提出了三种新的用于数据持久性的新属性包装器
+
+   ``` swift
+   @AppStorage
+   @StateObject
+   @SceneStorage
+   ```
+
+   在本项目里使用的是`@AppStorage`,实现了能够保存用户下载目录和可执行文件路径的功能，在Stack Overflow上有一段解释，个人觉得讲的蛮清楚的[SwiftUI: What is @AppStorage property wrapper](https://stackoverflow.com/questions/62562534/swiftui-what-is-appstorage-property-wrapper)
+
+   简单来说，`@AppStorage`是一种很方便的方法用于从`UserDefaults`里读写数据，并且使用起来跟`@State`修饰符一样，当数据发生变化的时候它会自动将数据保存到UserDefaults中。代码举例来说：
+
+   ``` swift
+   @State var dirUrl = NSString(string:"~/Downloads").expandingTildeInPath
+   ```
+
+   改成以下即可：
+
+   ``` swift
+   @AppStorage("dirUrl") var dirUrl:String = NSString(string:"~/Downloads").expandingTildeInPath
+   ```
+
+   它的功能与以下代码等价：
+
+   ``` swift
+   @State var dirUrl: String = NSString(string:"~/Downloads").expandingTildeInPath {
+       get {
+           UserDefaults.standard.string(forKey: "dirUrl")
+       }
+       set {
+           UserDefaults.standard.set(newValue, forKey: "dirUrl")
+       }
+   }
+   ```
+
+   `@AppStorage`的行为与`@State`相似，当数据发生变化的时候，也会驱动UI界面重新绘制。默认情况下，`@AppStorage`会使用`UserDefaults.standard`来存储数据，但是你也可以自定义使用你自己的`UserDefault`存储。
+
+   
+
 ----
 
 ## 免责声明
