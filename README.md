@@ -213,7 +213,21 @@ DispatchQueue.main.async {
 }
 ```
 
+10. ##### 设置窗口标题和副标题
 
+    比较简单，直接上代码
+
+    ``` swift
+    WindowGroup {
+                ContentView()
+                    .navigationTitle("典の视频下载小助手")
+                    .navigationSubtitle("\(version)")
+    }
+    ```
+
+    Github上有一个仓库介绍了相关的Style，可以前往查看学习[SwiftUIWindowStyles](https://github.com/martinlexow/SwiftUIWindowStyles)
+
+11. 
 
 ----
 

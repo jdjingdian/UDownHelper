@@ -46,11 +46,19 @@ struct FolderSelector:View {
             }.foregroundColor(Color("textColor"))
             if fileExist{
                 Image(systemName: "checkmark.circle.fill")
+                    .resizable()
                     .foregroundColor(.green)
+                    .frame(width: 15, height: 15, alignment: .center)
+                    .scaledToFit()
+                    
+                    
                 
             }else{
                 Image(systemName: "x.circle.fill")
+                    .resizable()
                     .foregroundColor(.red)
+                    .frame(width: 15, height: 15, alignment: .center)
+                    .scaledToFit()
             }
         }.onAppear {
             if fileManager.fileExists(atPath: filePath){

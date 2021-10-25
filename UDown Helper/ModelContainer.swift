@@ -38,4 +38,7 @@ struct taskTrack:Hashable{
     var process:Process
     var taskType:TaskType
     var runningType:RunningType
+    var index:Int
+    var isHide:Bool = false
+    var highlight:Bool = false
 }
