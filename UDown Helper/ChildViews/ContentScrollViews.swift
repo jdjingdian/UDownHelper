@@ -72,9 +72,10 @@ struct RunningState: View {
                             HStack(){
                                 
                                 switch task.runningType {
-                                case .running:Text("\(task.taskType.rawValue)正在运行").fontWeight(.bold)
-                                case .acciStop:Text("\(task.taskType.rawValue)手动停止").fontWeight(.bold)
-                                case .complete:Text("\(task.taskType.rawValue)运行结束").fontWeight(.bold)
+                                    
+                                case .running:Text("\(LocalizedStringKey(task.taskType.rawValue).stringValue()) is running").fontWeight(.bold)
+                                case .acciStop:Text("\(LocalizedStringKey(task.taskType.rawValue).stringValue()) manual stopped").fontWeight(.bold)
+                                case .complete:Text("\(LocalizedStringKey(task.taskType.rawValue).stringValue()) complete").fontWeight(.bold)
                                 }
                                 if task.runningType == .complete{
                                     Image(systemName: "checkmark.seal.fill")

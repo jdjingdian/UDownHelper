@@ -1,0 +1,42 @@
+/* 
+  Localizable.strings
+  UDown Helper
+
+  Created by Derek Jing on 2021/10/26.
+  
+*/
+"hello" = "阿尼哈sei唷";
+"Current Directory: %@" = "当前下载目录: %@";
+"Leave blank to use the default format" = "留空使用默认格式";
+"Use Aria2" = "使用Aria2下载加速";
+"inquiry" = "查询";
+"download" = "下载";
+"Aria2 Preferences" = "Aria2偏好设置";
+"Exit" = "退出程序";
+"Github Page" = "Github项目地址";
+"Youtube-dl Page" = "Youtube-dl项目地址";
+"Aria2 Page" = "Aria2项目地址";
+"Download location" = "选择下载位置";
+"Youtube-dl Path" = "Youtube-dl程序位置";
+"Aria2 Path" = "Aria2程序位置";
+"This tool has helped you query/download %@ times." = "小助手已帮你查询/下载%@次";
+"Use WeChat to scan the qrcode to buy me a coffee" = "如果觉得好用的话，可以微信扫码请我喝咖啡~";
+"Tap qrcode %@ times to disable this page" = "再点击打赏码%@次可以永久关闭该页面";
+"Donate" = "谢谢老板~";
+"Help" = "帮助";
+"UDown Helper" = "典の视频下载小助手";
+"%@ is running" = "%@正在运行";
+"%@ manual stopped" = "%@手动停止";
+"%@ complete" = "%@运行完成";
+"How To Install dependency" = "依赖安装方法";
+"Tutorial" = "使用教程";
+"Reset" = "重置";
+"⚠️Tap the button to reset the app.⚠️" = "⚠️点击按钮将会清除全部设置并退出程序⚠️";
+"Please enter the video URL" = "请输入视频链接";
+"Max Connection" = "最大连接数";
+"Split" = "拆分数量";
+"Max Concurrent" = "最大并发";
+"Min Blocksize(MB)" = "最小区块(MB)";
+"1. Install Homebrew:" = "1. 安装Homebrew:";
+"2. Install Youtube-dl:" = "2. 安装youtube-dl:";
+"3. Install aria2:" = "3. 安装aria2:";

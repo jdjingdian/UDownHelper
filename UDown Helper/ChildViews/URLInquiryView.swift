@@ -22,7 +22,7 @@ struct URLInquiryView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 25, height: 25, alignment: .center)
-            TextField("请输入视频链接",text: $videoUrl)
+            TextField("Please enter the video URL",text: $videoUrl)
                 .cornerRadius(40)
                 .onChange(of: videoUrl) { _ in
                     if videoUrl.contains("bilibili") {

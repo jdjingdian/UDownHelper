@@ -41,24 +41,30 @@ struct BuyCoffeeView_Previews:PreviewProvider {
 
 struct BuyCoffeeSubview: View {
     @Binding var runCount: Int
+    var test = "test"
     @Binding var likeCount:Int
     var body: some View {
         VStack(){
-            Text("小助手已帮你查询/下载\(runCount)次")
+            Text("This tool has helped you query/download \(String(runCount)) times.")
                 .fontWeight(.bold)
                 .foregroundColor(Color("textColor"))
             Image("like")
                 .onTapGesture {
                     likeCount += 1
                 }
-            Text("如果觉得好用的话，可以微信扫码请我喝咖啡~")
+            Text("Use WeChat to scan the qrcode to buy me a coffee")
                 .fontWeight(.bold)
                 .foregroundColor(Color("textColor"))
             
-            Text("再点击\(10 - likeCount)次可以永久关闭改选项")
+            Text("Tap qrcode \(String(10-likeCount)) times to disable this page")
                 .foregroundColor(Color("textColor").opacity(0.5))
                 .fontWeight(.light)
                 .padding(.all,20)
         }.padding(.all,20)
+    }
+}
+struct BuyCoffeeSubview_Previews:PreviewProvider{
+    static var previews: some View{
+        BuyCoffeeSubview(runCount: .constant(10), likeCount: .constant(5))
     }
 }

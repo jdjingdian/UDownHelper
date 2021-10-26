@@ -20,7 +20,7 @@ struct HelpView: View{
                             .foregroundColor(.black)
                             .frame(width: 15, height: 15, alignment: .center)
                             .scaledToFit()
-                        Text("安装教程")
+                        Text("How To Install dependency")
                             .fontWeight(.bold)
                     }
                 }
@@ -31,7 +31,7 @@ struct HelpView: View{
                             .foregroundColor(.black)
                             .frame(width: 15, height: 15, alignment: .center)
                             .scaledToFit()
-                        Text("使用教程")
+                        Text("Tutorial")
                             .fontWeight(.bold)
                     }
                 }
@@ -42,7 +42,7 @@ struct HelpView: View{
                             .foregroundColor(.black)
                             .frame(width: 15, height: 15, alignment: .center)
                             .scaledToFit()
-                        Text("重置")
+                        Text("Reset")
                             .fontWeight(.bold)
                     }
                     
@@ -65,7 +65,7 @@ struct HelpView_Previews: PreviewProvider {
 struct ResetView: View{
     var body: some View {
         VStack{
-            Text("⚠️点击按钮将会清除全部设置并退出程序⚠️")
+            Text("⚠️Tap the button to reset the app.⚠️")
                 .fontWeight(.bold)
             Button {
                 let domain = Bundle.main.bundleIdentifier!
@@ -81,7 +81,7 @@ struct ResetView: View{
                         .foregroundColor(.black)
                         .frame(width: 15, height: 15, alignment: .center)
                         .scaledToFit()
-                    Text("初始化应用设置")
+                    Text("Reset")
                         .fontWeight(.bold)
                 }
             }
@@ -92,9 +92,9 @@ struct ResetView: View{
 struct InstallHelpView: View {
     var body: some View{
         VStack{
-            InstallHelpSubview(title: "1. 安装Homebrew:", text: "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"")
-            InstallHelpSubview(title: "2. 安装youtube-dl:", text: "brew install youtube-dl")
-            InstallHelpSubview(title: "3. 安装aria2:", text: "brew install aria2")
+            InstallHelpSubview(title: "1. Install Homebrew:", text: "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"")
+            InstallHelpSubview(title: "2. Install Youtube-dl:", text: "brew install youtube-dl")
+            InstallHelpSubview(title: "3. Install aria2:", text: "brew install aria2")
             Spacer()
             Text("确保youtube-dl和aria2是安装在`/usr/local/bin`目录下，目前是写死的")
                 .foregroundColor(.gray)
@@ -109,7 +109,7 @@ struct InstallHelpSubview: View {
     let text:String
     var body: some View {
         HStack(){
-            Text(title)
+            Text(LocalizedStringKey(title).stringValue())
                 .fontWeight(.bold)
             Text(text).lineLimit(1)
             Button {

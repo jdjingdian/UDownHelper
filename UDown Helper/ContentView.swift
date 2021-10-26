@@ -33,7 +33,7 @@ struct ContentView: View {
     var window = NSScreen.main?.visibleFrame
     var body: some View {
         VStack(alignment: .center   , spacing: 5){
-            Text("当前下载目录：\(dirUrl)")
+            Text("Current Directory: \(dirUrl)")
                 .fontWeight(.light)
                 .foregroundColor(Color("textColor").opacity(0.5))
                 .frame(minWidth:0,maxWidth: .infinity,alignment:.center)
@@ -41,14 +41,14 @@ struct ContentView: View {
             URLInquiryView(minWidth: window!.width/3, sourceLogo: $sourceLogo, videoUrl: $videoUrl, runCount: $runCount, dlExcPath: $ydlExcUrl, dirUrl: $dirUrl, processManager: processManager)
             ContentScrollView(minHeight: window!.height/4, minWidth: window!.width/3, contentEntries: $consoleOutMsg, processManager: processManager)
             HStack(){
-                TextField("留空使用默认格式",text: $videoFormat)
+                TextField("Leave blank to use the default format",text: $videoFormat)
                     .onReceive(Just(videoFormat)) { newValue in //只允许输入数字
                         let filtered = newValue.filter { "0123456789.".contains($0) }
                         if filtered != newValue {
                             self.videoFormat = filtered
                         }
                     }
-                    .frame(width: 120,alignment: .trailing)
+                    .frame(minWidth: 120,maxWidth:250,alignment: .trailing)
                     .cornerRadius(40)
                 
                 Button {
@@ -77,7 +77,7 @@ struct ContentView: View {
                 }.foregroundColor(videoUrl == "" || !dirExist ? Color(.gray):Color("textColor"))
                     .padding([.leading,.trailing],5)
                     .disabled(videoUrl == "" || !dirExist)
-                Toggle("使用Aria2下载加速",isOn:$useAria)
+                Toggle("Use Aria2",isOn:$useAria)
 
                 Button {
                     if let url = URL(string: "uhelper://aria2") { //replace myapp with your app's name
@@ -86,33 +86,33 @@ struct ContentView: View {
                 } label: {
                     HStack(){
                         Image(systemName: "gear")
-                        Text("Aria2下载器设置")
+                        Text("Aria2 Preferences")
                     }
                 }
                 Button {
                     NSApp.terminate(self)
                 } label: {
-                    Text("退出程序")
+                    Text("Exit")
                 }
             }
             .frame(minWidth:0,maxWidth: .infinity)
                 .padding(.all,5)
             HStack(){
                 Image(systemName: "externaldrive.badge.icloud")
-                Link("项目Github仓库", destination: URL(string: "https://github.com/jdjingdian/UDownHelper")!)
+                Link("Github Page", destination: URL(string: "https://github.com/jdjingdian/UDownHelper")!)
                 Image(systemName: "externaldrive.badge.plus")
-                Link("youtube-dl仓库",destination: URL(string: "https://github.com/ytdl-org/youtube-dl")!)
+                Link("Youtube-dl Page",destination: URL(string: "https://github.com/ytdl-org/youtube-dl")!)
                 Image(systemName: "externaldrive.badge.plus")
-                Link("aria2仓库",destination: URL(string: "https://github.com/aria2/aria2")!)
+                Link("Aria2 Page",destination: URL(string: "https://github.com/aria2/aria2")!)
             }
         }.padding(.all,15)
         .onChange(of: processManager.consoleOutput){ _ in
             consoleOutMsg.append(contentData(output: processManager.consoleOutput, id: consoleOutMsg.count))
         }
         .toolbar{
-            FolderSelector(fnName: "选择下载文件夹", filePath: $dirUrl, fileExist: $dirExist, isDir: true)
-            FolderSelector(fnName: "选择youtube-dl路径", filePath: $ydlExcUrl,fileExist: $dlExist,isDir: false)
-            FolderSelector(fnName: "选择aria2路径", filePath: $ariaExcUrl, fileExist: $ariaExist, isDir: false)
+            FolderSelector(fnName: "Download location", filePath: $dirUrl, fileExist: $dirExist, isDir: true)
+            FolderSelector(fnName: "Youtube-dl Path", filePath: $ydlExcUrl,fileExist: $dlExist,isDir: false)
+            FolderSelector(fnName: "Aria2 Path", filePath: $ariaExcUrl, fileExist: $ariaExist, isDir: false)
             BuyCoffeeView(likeCount: $likeCount)
                 .padding(.leading,20)
 //            HelpView()
@@ -137,6 +137,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(maxConnection: .constant("1"), split: .constant("1"), maxConcurrentDown: .constant("1"), minBlockSize: .constant("1"), runCount: .constant(1), likeCount: .constant(10))
+            .environment(\.locale, .init(identifier: "en"))
     }
 }
 
@@ -145,3 +146,32 @@ struct ContentView_Previews: PreviewProvider {
 
 
 
+extension LocalizedStringKey {
+    var stringKey: String {
+        let description = "\(self)"
+
+        let components = description.components(separatedBy: "key: \"")
+            .map { $0.components(separatedBy: "\",") }
+
+        return components[1][0]
+    }
+}
+
+extension String {
+    static func localizedString(for key: String,
+                                locale: Locale = .current) -> String {
+        
+        let language = Bundle.main.preferredLocalizations[0] //注意这个地方对比locale.languageCode
+        let path = Bundle.main.path(forResource: language, ofType: "lproj")!
+        let bundle = Bundle(path: path)!
+        let localizedString = NSLocalizedString(key, bundle: bundle, comment: "")
+        
+        return localizedString
+    }
+}
+
+extension LocalizedStringKey {
+    func stringValue(locale: Locale = .current) -> String {
+        return .localizedString(for: self.stringKey, locale: locale)
+    }
+}

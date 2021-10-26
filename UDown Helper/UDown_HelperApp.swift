@@ -19,16 +19,16 @@ struct UDown_HelperApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(maxConnection: $maxConnection, split: $split, maxConcurrentDown: $maxConcurrentDown, minBlockSize: $minBlockSize, runCount: $runCount, likeCount: $likeCount)
-                .navigationTitle("典の视频下载小助手")
+                .navigationTitle("UDown Helper")
                 .navigationSubtitle("\(version)")
         }.windowToolbarStyle(UnifiedWindowToolbarStyle())
-        WindowGroup("谢谢老板~") {
+        WindowGroup("Donate") {
             BuyCoffeeSubview(runCount: $runCount, likeCount: $likeCount)
         }.handlesExternalEvents(matching: Set(arrayLiteral: "like"))
-        WindowGroup("Aria2下载器设置") {
+        WindowGroup("Aria2 Preferences") {
             Aria2SettingView(maxConnection: $maxConnection, split: $split, maxConcurrentDown: $maxConcurrentDown, minBlockSize: $minBlockSize)
         }.handlesExternalEvents(matching: Set(arrayLiteral: "aria2"))
-        WindowGroup("Aria2下载器设置") {
+        WindowGroup("Help") {
             HelpView()
         }.handlesExternalEvents(matching: Set(arrayLiteral: "help"))
     }

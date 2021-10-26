@@ -17,7 +17,8 @@ struct FolderSelector:View {
     
     var body: some View {
         HStack(){
-            Button(fnName){
+            
+            Button(LocalizedStringKey(fnName).stringValue()){
                 let panel = NSOpenPanel()
                 panel.allowsMultipleSelection = false
                 panel.canChooseDirectories = isDir ? true:false

@@ -15,10 +15,10 @@ struct Aria2SettingView: View {
     @Binding var minBlockSize: String
     var body: some View{
         VStack(alignment: .leading, spacing: 10){
-            Aria2DetailSettingView(title: "最大连接数", parameter: $maxConnection)
-            Aria2DetailSettingView(title: "下载拆分数",parameter: $split)
-            Aria2DetailSettingView(title: "最大并发",parameter: $maxConcurrentDown)
-            Aria2DetailSettingView(title: "最小区块(MB)",parameter: $minBlockSize)
+            Aria2DetailSettingView(title: "Max Connection", parameter: $maxConnection)
+            Aria2DetailSettingView(title: "Split",parameter: $split)
+            Aria2DetailSettingView(title: "Max Concurrent",parameter: $maxConcurrentDown)
+            Aria2DetailSettingView(title: "Min Blocksize(MB)",parameter: $minBlockSize)
         }.padding(.all,10)
         
     }

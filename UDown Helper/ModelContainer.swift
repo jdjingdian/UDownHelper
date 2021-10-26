@@ -24,8 +24,8 @@ class DetailWC<RootView : View>: NSWindowController {
 }
 
 enum TaskType:String {
-    case inquire = "查询"
-    case download = "下载"
+    case inquire = "inquiry"
+    case download = "download"
 }
 
 enum RunningType {
