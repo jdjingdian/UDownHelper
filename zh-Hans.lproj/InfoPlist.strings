@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  UDown Helper
+
+  Created by Derek Jing on 2021/10/26.
+  
+*/
+CFBundleName = "典の视频下载小助手";
+CFBundleDisplayName = "典の视频下载小助手";

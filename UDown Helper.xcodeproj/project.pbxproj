@@ -20,6 +20,7 @@
 		39C8B9822726B69800A396D7 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C8B9812726B69800A396D7 /* MenuView.swift */; };
 		39C8B9842726C48200A396D7 /* URLInquiryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C8B9832726C48100A396D7 /* URLInquiryView.swift */; };
 		39C8B9862726EA3F00A396D7 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C8B9852726EA3E00A396D7 /* HelpView.swift */; };
+		39C8B9892727906A00A396D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 39C8B98B2727906A00A396D7 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		39C8B9812726B69800A396D7 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		39C8B9832726C48100A396D7 /* URLInquiryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLInquiryView.swift; sourceTree = "<group>"; };
 		39C8B9852726EA3E00A396D7 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
+		39C8B98A2727906A00A396D7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		39C8B98C2727908000A396D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +72,7 @@
 		39994D8C272255BC00593E5F = {
 			isa = PBXGroup;
 			children = (
+				39C8B98B2727906A00A396D7 /* InfoPlist.strings */,
 				39994D97272255BC00593E5F /* UDown Helper */,
 				39994D96272255BC00593E5F /* Products */,
 			);
@@ -156,6 +160,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 39994D8C272255BC00593E5F;
 			productRefGroup = 39994D96272255BC00593E5F /* Products */;
@@ -173,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39994DA0272255BF00593E5F /* Preview Assets.xcassets in Resources */,
+				39C8B9892727906A00A396D7 /* InfoPlist.strings in Resources */,
 				39994D9D272255BF00593E5F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -199,6 +205,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		39C8B98B2727906A00A396D7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				39C8B98A2727906A00A396D7 /* zh-Hans */,
+				39C8B98C2727908000A396D7 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		39994DA2272255BF00593E5F /* Debug */ = {
@@ -252,6 +270,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -307,6 +326,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

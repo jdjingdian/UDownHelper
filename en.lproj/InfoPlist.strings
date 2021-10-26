@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  UDown Helper
+
+  Created by Derek Jing on 2021/10/26.
+  
+*/
+CFBundleName = "UDown Helper";
+CFBundleDisplayName = "UDown Helper";
