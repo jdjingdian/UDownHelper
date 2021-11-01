@@ -21,7 +21,6 @@
 		39C8B9842726C48200A396D7 /* URLInquiryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C8B9832726C48100A396D7 /* URLInquiryView.swift */; };
 		39C8B9862726EA3F00A396D7 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C8B9852726EA3E00A396D7 /* HelpView.swift */; };
 		39C8B9892727906A00A396D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 39C8B98B2727906A00A396D7 /* InfoPlist.strings */; };
-		39C8B996272794C800A396D7 /* StaticVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C8B995272794C800A396D7 /* StaticVariables.swift */; };
 		39C8B9BB27279BA000A396D7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 39C8B9BD27279BA000A396D7 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -44,7 +43,6 @@
 		39C8B9852726EA3E00A396D7 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		39C8B98A2727906A00A396D7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		39C8B98C2727908000A396D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		39C8B995272794C800A396D7 /* StaticVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticVariables.swift; sourceTree = "<group>"; };
 		39C8B9BE27279BA100A396D7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,6 +79,7 @@
 				39994D96272255BC00593E5F /* Products */,
 			);
 			sourceTree = "<group>";
+			tabWidth = 3;
 		};
 		39994D96272255BC00593E5F /* Products */ = {
 			isa = PBXGroup;
@@ -94,12 +93,11 @@
 			isa = PBXGroup;
 			children = (
 				39C8B98D2727940700A396D7 /* Misc */,
-				3956949D272305D0009EF6F2 /* ModelContainer.swift */,
 				39994D98272255BC00593E5F /* UDown_HelperApp.swift */,
-				39C8B995272794C800A396D7 /* StaticVariables.swift */,
 				39994D9A272255BC00593E5F /* ContentView.swift */,
 				39C8B9BD27279BA000A396D7 /* Localizable.strings */,
 				39994DA72722852000593E5F /* ProcessHelper.swift */,
+				3956949D272305D0009EF6F2 /* ModelContainer.swift */,
 				395694A12723BF85009EF6F2 /* ChildViews */,
 				39994D9C272255BF00593E5F /* Assets.xcassets */,
 				39994DA1272255BF00593E5F /* UDown_Helper.entitlements */,
@@ -222,7 +220,6 @@
 				39C8B9822726B69800A396D7 /* MenuView.swift in Sources */,
 				39994D9B272255BC00593E5F /* ContentView.swift in Sources */,
 				39994DA82722852000593E5F /* ProcessHelper.swift in Sources */,
-				39C8B996272794C800A396D7 /* StaticVariables.swift in Sources */,
 				395694A02723BD15009EF6F2 /* A2SettingView.swift in Sources */,
 				39994D99272255BC00593E5F /* UDown_HelperApp.swift in Sources */,
 			);
@@ -383,13 +380,14 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "UDown-Helper-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "UDown Helper";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.magicdian.UDown-Helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -412,13 +410,14 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "UDown-Helper-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "UDown Helper";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.magicdian.UDown-Helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

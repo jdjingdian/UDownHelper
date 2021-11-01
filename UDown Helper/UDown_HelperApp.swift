@@ -15,12 +15,13 @@ struct UDown_HelperApp: App {
     @AppStorage("maxConcurrentDown") var maxConcurrentDown = "8"
     @AppStorage("minBlockSize") var minBlockSize = "1"
     @AppStorage("likeCount") var likeCount:Int = 0
-    var version = "v1.0.0"
+    var version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+//    var v = Bundle.version()
     var body: some Scene {
         WindowGroup {
             ContentView(maxConnection: $maxConnection, split: $split, maxConcurrentDown: $maxConcurrentDown, minBlockSize: $minBlockSize, runCount: $runCount, likeCount: $likeCount)
                 .navigationTitle("UDown Helper")
-                .navigationSubtitle("\(version)")
+                .navigationSubtitle(version ?? "")
         }.windowToolbarStyle(UnifiedWindowToolbarStyle())
         WindowGroup("Donate") {
             BuyCoffeeSubview(runCount: $runCount, likeCount: $likeCount)
@@ -31,5 +32,8 @@ struct UDown_HelperApp: App {
         WindowGroup("Help") {
             HelpView()
         }.handlesExternalEvents(matching: Set(arrayLiteral: "help"))
+        Settings{
+            MenuView()
+        }
     }
 }

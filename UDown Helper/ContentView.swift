@@ -13,16 +13,6 @@ struct ContentView: View {
     @AppStorage("dirUrl") var dirUrl:String = NSString(string:"~/Downloads").expandingTildeInPath
     @AppStorage("ydlExcUrl") var ydlExcUrl:String = "/usr/local/bin/youtube-dl"
     @AppStorage("ariaExcUrl") var ariaExcUrl:String = "/usr/local/bin/aria2c"
-    
-    @State var videoUrl = ""
-    @State var videoFormat = ""
-    @State var combineUrl = ""
-    @State var cOut = ""
-    @State var consoleOutMsg = [contentData]()
-    @State var sourceLogo = Image(systemName: "play.tv.fill")
-    @State var dirExist = false
-    @State var dlExist = false
-    @State var ariaExist = false
     @AppStorage("useAria") var useAria = false
     @Binding var maxConnection:String
     @Binding var split:String
@@ -30,6 +20,7 @@ struct ContentView: View {
     @Binding var minBlockSize:String
     @Binding var runCount:Int
     @Binding var likeCount:Int
+    @State var viewVars = contentVars()
     var window = NSScreen.main?.visibleFrame
     var body: some View {
         VStack(alignment: .center   , spacing: 5){
@@ -38,14 +29,14 @@ struct ContentView: View {
                 .foregroundColor(Color("textColor").opacity(0.5))
                 .frame(minWidth:0,maxWidth: .infinity,alignment:.center)
                 .padding([.top, .leading], 20.0)
-            URLInquiryView(minWidth: window!.width/3, sourceLogo: $sourceLogo, videoUrl: $videoUrl, runCount: $runCount, dlExcPath: $ydlExcUrl, dirUrl: $dirUrl, processManager: processManager)
-            ContentScrollView(minHeight: window!.height/4, minWidth: window!.width/3, contentEntries: $consoleOutMsg, processManager: processManager)
+            URLInquiryView(minWidth: window!.width/3, sourceLogo: $viewVars.sourceLogo, videoUrl: $viewVars.videoUrl, runCount: $runCount, dlExcPath: $ydlExcUrl, dirUrl: $dirUrl, processManager: processManager)
+            ContentScrollView(minHeight: window!.height/4, minWidth: window!.width/3, contentEntries: $viewVars.consoleOutMsg, processManager: processManager)
             HStack(){
-                TextField("Leave blank to use the default format",text: $videoFormat)
-                    .onReceive(Just(videoFormat)) { newValue in //只允许输入数字
+                TextField("Leave blank to use the default format",text: $viewVars.videoFormat)
+                    .onReceive(Just(viewVars.videoFormat)) { newValue in //只允许输入数字
                         let filtered = newValue.filter { "0123456789.".contains($0) }
                         if filtered != newValue {
-                            self.videoFormat = filtered
+                            self.viewVars.videoFormat = filtered
                         }
                     }
                     .frame(minWidth: 120,maxWidth:250,alignment: .trailing)
@@ -54,29 +45,29 @@ struct ContentView: View {
                 Button {
                     
                     if useAria{
-                        if videoFormat == ""{
-                            let arg = ["--external-downloader",ariaExcUrl,"--external-downloader-args","-x \(maxConnection) -s \(split) -j \(maxConcurrentDown) -k \(minBlockSize)M",videoUrl]
-                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg,opMode: .download,runMode: .running)
+                        if viewVars.videoFormat == ""{
+                            let arg = ["--external-downloader",ariaExcUrl,"--external-downloader-args","-x \(maxConnection) -s \(split) -j \(maxConcurrentDown) -k \(minBlockSize)M",viewVars.videoUrl]
+                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg,opMode: .download,runMode: .running, ariaExcUrl: ariaExcUrl)
                         }else{
-                            let arg = ["--external-downloader",ariaExcUrl,"--external-downloader-args","-x \(maxConnection) -s \(split) -j \(maxConcurrentDown) -k \(minBlockSize)M","-f",videoFormat,videoUrl]
-                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg,opMode: .download,runMode: .running)
+                            let arg = ["--external-downloader",ariaExcUrl,"--external-downloader-args","-x \(maxConnection) -s \(split) -j \(maxConcurrentDown) -k \(minBlockSize)M","-f",viewVars.videoFormat,viewVars.videoUrl]
+                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg,opMode: .download,runMode: .running, ariaExcUrl: ariaExcUrl)
                         }
                     }else{
-                        if videoFormat == ""{
-                            let arg = [videoUrl]
-                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg,opMode: .download,runMode: .running)
+                        if viewVars.videoFormat == ""{
+                            let arg = [viewVars.videoUrl]
+                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg,opMode: .download,runMode: .running, ariaExcUrl: ariaExcUrl)
                         }else{
-                            let arg = ["-f",videoFormat,videoUrl]
-                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg,opMode: .download,runMode: .running)
+                            let arg = ["-f",viewVars.videoFormat,viewVars.videoUrl]
+                            processManager.runProcess(dlExcPath: "/usr/local/bin/youtube-dl", dlPath: dirUrl, dlArgs: arg,opMode: .download,runMode: .running, ariaExcUrl: ariaExcUrl)
                         }
                     }
                     runCount += 1
                     
                 } label: {
                     Image(systemName: "icloud.and.arrow.down")
-                }.foregroundColor(videoUrl == "" || !dirExist ? Color(.gray):Color("textColor"))
+                }.foregroundColor(viewVars.videoUrl == "" || !viewVars.dirExist ? Color(.gray):Color("textColor"))
                     .padding([.leading,.trailing],5)
-                    .disabled(videoUrl == "" || !dirExist)
+                    .disabled(viewVars.videoUrl == "" || !viewVars.dirExist)
                 Toggle("Use Aria2",isOn:$useAria)
 
                 Button {
@@ -107,15 +98,14 @@ struct ContentView: View {
             }
         }.padding(.all,15)
         .onChange(of: processManager.consoleOutput){ _ in
-            consoleOutMsg.append(contentData(output: processManager.consoleOutput, id: consoleOutMsg.count))
+            viewVars.consoleOutMsg.append(contentData(output: processManager.consoleOutput, id: viewVars.consoleOutMsg.count))
         }
         .toolbar{
-            FolderSelector(fnName: "Download location", filePath: $dirUrl, fileExist: $dirExist, isDir: true)
-            FolderSelector(fnName: "Youtube-dl Path", filePath: $ydlExcUrl,fileExist: $dlExist,isDir: false)
-            FolderSelector(fnName: "Aria2 Path", filePath: $ariaExcUrl, fileExist: $ariaExist, isDir: false)
+            FolderSelector(fnName: "Download location", filePath: $dirUrl, fileExist: $viewVars.dirExist, isDir: true)
+            FolderSelector(fnName: "Youtube-dl Path", filePath: $ydlExcUrl,fileExist: $viewVars.dlExist,isDir: false)
+            FolderSelector(fnName: "Aria2 Path", filePath: $ariaExcUrl, fileExist: $viewVars.ariaExist, isDir: false)
             BuyCoffeeView(likeCount: $likeCount)
                 .padding(.leading,20)
-//            HelpView()
             Button {
                 if let url = URL(string: "uhelper://help") { //replace myapp with your app's name
                     NSWorkspace.shared.open(url)

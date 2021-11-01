@@ -14,15 +14,6 @@ struct contentData:Hashable{
     var id: Int
 }
 
-class DetailWC<RootView : View>: NSWindowController {
-    convenience init(rootView: RootView) {
-        let hostingController = NSHostingController(rootView: rootView.frame(width: 250, height: 200))
-        let window = NSWindow(contentViewController: hostingController)
-        window.setContentSize(NSSize(width: 250, height: 200))
-        self.init(window: window)
-    }
-}
-
 enum TaskType:String {
     case inquire = "inquiry"
     case download = "download"
@@ -42,3 +33,16 @@ struct taskTrack:Hashable{
     var isHide:Bool = false
     var highlight:Bool = false
 }
+
+struct contentVars {
+    var videoUrl:String = ""
+    var videoFormat:String = ""
+    var combineUrl:String = ""
+    var cOut:String = ""
+    var consoleOutMsg = [contentData]()
+    var sourceLogo:Image = Image(systemName: "play.tv.fill")
+    var dirExist:Bool = false
+    var dlExist:Bool = false
+    var ariaExist:Bool = false
+}
+

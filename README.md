@@ -227,7 +227,49 @@ DispatchQueue.main.async {
 
     Github上有一个仓库介绍了相关的Style，可以前往查看学习[SwiftUIWindowStyles](https://github.com/martinlexow/SwiftUIWindowStyles)
 
-11. 
+11. ##### 本地化
+
+    在本地化的过程中，如果是单纯的String，比如Text("Hello")里的"Hello"，可以很轻松通过Localizable.string实现本地化，但是对于一些变量来说，就会不生效，参照网上写了个扩展但是初次运行发现不成功，调查后发现是因为通过`locale.languageCode`,原始代码中使用的是这个，但是这个代码返回的东西实际上只是区域信息，就比如中文，有简体，有繁体，有zh-Hans、zh-hk、zh-tw等，这种时候使用`locale.languageCode`就没有办法很好的实现本地化，所以最终我改成了`Bundle.main.preferredLocalizations[0]`来获取当前的语言信息。
+
+    ``` swift
+    extension LocalizedStringKey {
+        var stringKey: String {
+            let description = "\(self)"
+    
+            let components = description.components(separatedBy: "key: \"")
+                .map { $0.components(separatedBy: "\",") }
+    
+            return components[1][0]
+        }
+    }
+    
+    extension String {
+        static func localizedString(for key: String,
+                                    locale: Locale = .current) -> String {
+            
+            let language = Bundle.main.preferredLocalizations[0] //注意这个地方对比locale.languageCode
+            let path = Bundle.main.path(forResource: language, ofType: "lproj")!
+            let bundle = Bundle(path: path)!
+            let localizedString = NSLocalizedString(key, bundle: bundle, comment: "")
+            
+            return localizedString
+        }
+    }
+    
+    extension LocalizedStringKey {
+        func stringValue(locale: Locale = .current) -> String {
+            return .localizedString(for: self.stringKey, locale: locale)
+        }
+    }
+    ```
+
+    在使用的时候，使用这个代替string即可
+
+    ``` swift
+    LocalizedStringKey("变量用的，需要本地化的文字").stringValue()
+    ```
+
+    
 
 ----
 

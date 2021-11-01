@@ -13,16 +13,43 @@ class ProcessHelper: ObservableObject{
     let globalQueue = DispatchQueue.global() //设置后台并行队列
     @Published var consoleOutput = ""
     @Published var taskStack:[taskTrack] = []
-    func runProcess(dlExcPath:String,dlPath:String,dlArgs:[String],opMode:TaskType,runMode:RunningType){
-        //        globalQueue.async {
+    
+    func getSubstring(_ path: String) -> String {
+        if let firstIndex = path.lastIndex(of: "/") {
+            let index:Int = path.distance(from: path.startIndex, to: firstIndex)
+            let strIndex = path.index(path.startIndex, offsetBy: index)
+            print("index：\(index)")
+            let outputPath = String(path[..<strIndex])
+            print("convertedPath:\(outputPath)")
+            return outputPath
+        }else{
+            print("not found")
+            return path
+        }
+    }
+    
+    
+    func runProcess(dlExcPath:String,dlPath:String,dlArgs:[String],opMode:TaskType,runMode:RunningType,ariaExcUrl:String?=nil){
         let index = self.taskStack.count
         
         self.taskStack.append(taskTrack.init(process: Process(), taskType: .inquire, runningType: .running, index: index))
-        
-        //            let task = Process()
-        
         var environment =  ProcessInfo.processInfo.environment
-        environment["PATH"] = "/usr/local/bin"
+        
+        
+        let dlEnvPath = getSubstring(dlExcPath)
+        if ariaExcUrl == nil {
+            environment["PATH"] = dlEnvPath
+        }else{
+            let ariaEnvPath = getSubstring(ariaExcUrl!)
+
+            if dlEnvPath == ariaEnvPath {
+                environment["PATH"] = dlEnvPath
+            }else{
+                environment["PATH"] = "\(dlEnvPath):\(ariaEnvPath)"
+            }
+        }
+        
+        print("PATH:\(environment["PATH"] ?? "")")
         self.taskStack[index].process.environment = environment
         
         //the path to the external program you want to run
